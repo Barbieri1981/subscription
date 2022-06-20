@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Getter
@@ -12,15 +13,21 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class SubscriptionRqDTO {
 
-    @NotBlank(message = "email is required")
+    @NotNull(message = "Email can not null")
+    @NotBlank(message = "Email can not be blank")
     @Email
     private String email;
-    private String firstName;
-    private String gender;
+
+    @NotNull(message = "Birth Date can not be null")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone="GMT-3")
     private Date birthDate;
+
+    private String firstName;
+    private String gender;
     private boolean consent;
     private long newsletterId;
+
 }

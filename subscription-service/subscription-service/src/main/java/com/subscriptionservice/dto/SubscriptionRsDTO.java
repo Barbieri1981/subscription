@@ -10,6 +10,7 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class SubscriptionRsDTO {
     private long id;
     private String email;

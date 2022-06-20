@@ -26,7 +26,7 @@ public class SubscriptionExceptionHandler {
     }
 
     @ExceptionHandler(SubscriptionException.class)
-    public final ResponseEntity<ErrorDetailsDTO> handleSubscriptionExeption(final SubscriptionException ex) {
+    public final ResponseEntity<ErrorDetailsDTO> handleSubscriptionException(final SubscriptionException ex) {
         return createError(ex, ex.getError(), HttpStatus.valueOf(ex.getHttpStatus()));
     }
 
@@ -47,6 +47,11 @@ public class SubscriptionExceptionHandler {
 
     @ExceptionHandler(RegisteredSubscriptionException.class)
     public final ResponseEntity<ErrorDetailsDTO> handleRegisteredSubscription(final RegisteredSubscriptionException ex) {
+        return createError(ex, ex.getError(), HttpStatus.valueOf(ex.getHttpStatus()));
+    }
+
+    @ExceptionHandler(SubscriptionNotFound.class)
+    public final ResponseEntity<ErrorDetailsDTO> handleSubscriptionNotFound(final SubscriptionNotFound ex) {
         return createError(ex, ex.getError(), HttpStatus.valueOf(ex.getHttpStatus()));
     }
 

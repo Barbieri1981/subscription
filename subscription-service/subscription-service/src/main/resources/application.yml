@@ -1,0 +1,3 @@
+mail-config:
+  subject: "Subscription has ben successfully"
+  message: "message"

@@ -9,6 +9,7 @@ import com.subscriptionservice.enums.ErrorType;
 import com.subscriptionservice.exception.RegisteredSubscriptionException;
 import com.subscriptionservice.exception.SubscriptionNotFound;
 import com.subscriptionservice.repository.SubscriptionRepository;
+import com.subscriptionservice.service.EmailService;
 import com.subscriptionservice.service.SubscriptionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,16 +27,19 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     private final SubscriptionRqConverter subscriptionRqConverter;
     private final SubscriptionRepository repository;
     private final SubscriptionConverter subscriptionConverter;
+    private final EmailService emailService;
 
     @Override
     public SubscriptionRsDTO createSubscription(final SubscriptionRqDTO request) {
         log.debug("Creating subscription: {}", request);
         validateData(request);
         Subscription subscription = this.repository.save(this.subscriptionRqConverter.convert(request));
+        this.emailService.sendEmail(request);
         return this.subscriptionConverter.convert(subscription);
     }
 
     private void validateData(final SubscriptionRqDTO request) {
+        log.debug("Validating data {}", request);
         Optional<Subscription> result = this.repository.findByEmail(request.getEmail());
         if (result.isPresent()) {
             throw new RegisteredSubscriptionException("Subscription exists", ErrorType.SUBSCRIPTION_EXISTS);
@@ -50,10 +54,22 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
     @Override
-    public SubscriptionRsDTO retrieveSubscription(long id) {
-        log.info("Retrieving subscription by id {}", id);
-        return this.subscriptionConverter.convert(this.repository.findById(id)
-                .orElseThrow(()->new SubscriptionNotFound("Subscription not found", ErrorType.SUBSCRIPTION_NOT_FOUND)));
+    public SubscriptionRsDTO retrieveSubscription(final long id) {
+        return this.subscriptionConverter.convert(findSubscriptionById(id));
+    }
+
+    @Override
+    public void cancelSubscription(final long id) {
+        final Subscription subscription = findSubscriptionById(id);
+        log.debug("Canceling subscription {}", subscription);
+        subscription.setConsent(false);
+        this.repository.save(subscription);
+    }
+
+    private Subscription findSubscriptionById(final long id) {
+        log.debug("Retrieving subscription by id {}", id);
+        return this.repository.findById(id)
+                .orElseThrow(()->new SubscriptionNotFound("Subscription not found", ErrorType.SUBSCRIPTION_NOT_FOUND));
     }
 
 }

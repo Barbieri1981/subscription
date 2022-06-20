@@ -4,10 +4,7 @@ import com.subscriptionservice.dto.SubscriptionRqDTO;
 import com.subscriptionservice.dto.SubscriptionRsDTO;
 import com.subscriptionservice.exception.dto.ErrorDetailsDTO;
 import com.subscriptionservice.service.SubscriptionService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -59,5 +56,17 @@ public class SubscriptionController {
     })
     public ResponseEntity<SubscriptionRsDTO> retrievesSubscription(@PathVariable final long id) {
         return new ResponseEntity<>(this.service.retrieveSubscription(id), HttpStatus.OK);
+    }
+
+    @PostMapping(path = "subscription/{id}/cancel")
+    @ApiOperation(value = "Cancel subscription")
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "Cancel Subscription"),
+            @ApiResponse(code = 400, message = "Bad Request", response = ErrorDetailsDTO.class),
+            @ApiResponse(code = 500, message = "Internal Server Error", response = ErrorDetailsDTO.class)
+    })
+    public ResponseEntity<Void> cancelSubscription(@PathVariable final long id) {
+        this.service.cancelSubscription(id);
+        return ResponseEntity.noContent().build();
     }
 }

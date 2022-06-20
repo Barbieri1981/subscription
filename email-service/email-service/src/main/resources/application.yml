@@ -1,0 +1,6 @@
+mail-config:
+  host: host
+  port: port
+  userName: user
+  passWord: pass
+  from: "Email Service <no-reply@email-service.com>"
