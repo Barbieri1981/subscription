@@ -33,7 +33,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     public SubscriptionRsDTO createSubscription(final SubscriptionRqDTO request) {
         log.debug("Creating subscription: {}", request);
         validateData(request);
-        Subscription subscription = this.repository.save(this.subscriptionRqConverter.convert(request));
+        final Subscription subscription = this.repository.save(this.subscriptionRqConverter.convert(request));
         this.emailService.sendEmail(request);
         return this.subscriptionConverter.convert(subscription);
     }

@@ -1,0 +1,58 @@
+version: '3.7'
+services:
+
+  eureka-server:
+    build: ./eureka-server/eureka-server
+    container_name: eureka-server
+    ports:
+      - 8070:8070
+    networks:
+      - subscription-network
+
+  email-service:
+    build: ./email-service/email-service
+    container_name: email-service
+    ports:
+      - 9090:9090
+    networks:
+      - subscription-network
+    links:
+      - eureka-server
+    depends_on:
+      - eureka-server
+
+  public-service:
+    build: ./public-service/public-service
+    container_name: public-service
+    environment:
+      EUREKA_SERVER: http://eureka-server:8070/eureka
+    ports:
+      - 9000:9000
+    networks:
+      - subscription-network
+    links:
+      - eureka-server
+    depends_on:
+      - eureka-server
+    restart: on-failure
+
+  subscription-service:
+    build: ./subscription-service/subscription-service
+    container_name: subscription-service
+    environment:
+      EUREKA_SERVER: http://eureka-server:8070/eureka
+    ports:
+      - 8080:8080
+    networks:
+      - subscription-network
+    links:
+      - eureka-server
+    depends_on:
+      - eureka-server
+    restart: on-failure
+
+networks:
+  subscription-network:
+    name: subscription-network
+    driver: bridge
+
