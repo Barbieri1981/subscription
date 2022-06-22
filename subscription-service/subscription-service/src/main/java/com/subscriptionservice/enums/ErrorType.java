@@ -5,7 +5,8 @@ public enum ErrorType {
     SUBSCRIPTION_GENERIC_ERROR("subscription_001", "Unexpected error"),
     SUBSCRIPTION_EXISTS("subscription_002", "subscription exists"),
     SUBSCRIPTION_ERROR_DATA("subscription_003", "Error while validating data"),
-    SUBSCRIPTION_NOT_FOUND("subscription_004", "Subscriptions not found");
+    SUBSCRIPTION_NOT_FOUND("subscription_004", "Subscriptions not found"),
+    SUBSCRIPTION_IS_DOWN("subscription_005", "Create Subscription Service is momentary down");
 
     private final String code;
     private final String description;

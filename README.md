@@ -49,6 +49,13 @@ Eureka server
 ##### Frameworks used
 - Eureka Server
 
+
+### Resilient Subscription-Service using Resilience4j patterns
+
+- Circuit Breaker pattern for create subscription **"/subscription"** API inside **subscription-service** microservice   
+- Rate Limiter pattern for retrieving subscriptions **"/subscriptions"** API inside **subscription-service** microservice
+
+
 ## Run microservice ecosystem
 ```docker-compose up```
 
