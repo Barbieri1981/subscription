@@ -1,12 +1,27 @@
 # Subscription microservice ecosystem  
 
 
+#### Microservice: Public Service
+##### Description
+Is an orchestrator that interacts with the Subscription service consuming the exposed endpoints.
+- Create subscription
+- Retrieve Subscription by id
+- Retrieves Subscriptions
+##### Frameworks used
+- Spring Boot
+- Spring Cloud
+- Eureka Client
+- Lombok
+- Feign
+- Swagger UI
+
+
 #### Microservice: Subscription Service
 ##### Description
 Microservice with subscription business endpoint.    
-- Create subscription Endpoint   
-- Retrieve Subscription by id Endpoint   
-- Retrieves Subscriptions Endpoint    
+- Create subscription   
+- Retrieve Subscription by id   
+- Retrieves Subscriptions    
 ##### Frameworks used
 - Spring Boot   
 - Spring Cloud
@@ -19,7 +34,7 @@ Microservice with subscription business endpoint.
 #### Microservice: Email Service
 ##### Description
 Microservice with send email endpoints
-- Send email Endpoint
+- Send email
 ##### Frameworks used
 - Spring Boot
 - Spring Cloud
@@ -41,16 +56,16 @@ Eureka server
 ```docker-compose down```
 
 ## Clean environment
-docker system prune   
-docker system prune -a
-docker volume prune
-docker container stop container_name
-docker rm -v container_name   
+```docker system prune```      
+```docker system prune -a```   
+```docker volume prune```   
+```docker container stop container_name```
+```docker rm -v container_name```   
 
 ## Verify clean environment
-docker images -a
-docker ps -a
-docker container ls
+```docker images -a```   
+```docker ps -a```   
+```docker container ls```   
 
 ##  Swagger UI URL :: Public Service
 http://localhost:9000/swagger-ui.html   
