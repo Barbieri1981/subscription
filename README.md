@@ -59,7 +59,7 @@ Eureka server
 ```docker system prune```      
 ```docker system prune -a```   
 ```docker volume prune```   
-```docker container stop container_name```
+```docker container stop container_name```   
 ```docker rm -v container_name```   
 
 ## Verify clean environment
