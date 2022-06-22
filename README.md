@@ -33,7 +33,7 @@ Microservice with subscription business endpoint.
 
 #### Microservice: Email Service
 ##### Description
-Microservice with send email endpoints
+The goal of this microservice is sends emails
 - Send email
 ##### Frameworks used
 - Spring Boot
