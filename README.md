@@ -37,22 +37,23 @@ Eureka server
 ## Run microservice ecosystem
 ```docker-compose up```
 
-## Go down microservice ecosystem
+## Stops containers and removes containers, networks, volumes, and images
 ```docker-compose down```
 
-###clean environment
+## Clean environment
 docker system prune   
 docker system prune -a
 docker volume prune
 docker container stop container_name
-docker rm -v container_name
-###verify clean environment
+docker rm -v container_name   
+
+## Verify clean environment
 docker images -a
 docker ps -a
 docker container ls
 
-##Swagger UI URL :: Public Service
+##  Swagger UI URL :: Public Service
 http://localhost:9000/swagger-ui.html   
 
-##Eureka Server
+##  Eureka Server
 http://localhost:8070/
