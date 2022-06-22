@@ -12,6 +12,8 @@ services:
   email-service:
     build: ./email-service/email-service
     container_name: email-service
+    environment:
+      EUREKA_SERVER: http://eureka-server:8070/eureka
     ports:
       - 9090:9090
     networks:
@@ -20,6 +22,7 @@ services:
       - eureka-server
     depends_on:
       - eureka-server
+    restart: on-failure
 
   public-service:
     build: ./public-service/public-service
