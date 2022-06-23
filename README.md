@@ -49,6 +49,16 @@ Eureka server
 ##### Frameworks used
 - Eureka Server
 
+#### Microservice: Security Server
+##### Description
+Security Server
+##### Frameworks used
+- Spring Boot
+- Spring Cloud
+- Eureka Client
+- Lombok
+
+
 
 ### Resilient Subscription-Service using Resilience4j patterns
 
