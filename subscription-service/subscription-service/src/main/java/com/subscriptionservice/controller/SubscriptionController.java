@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -34,6 +35,7 @@ public class SubscriptionController {
         return new ResponseEntity<>(this.service.createSubscription(request), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(path = "subscriptions", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Retrieves subscriptions", notes = "", response = SubscriptionRsDTO.class)
     @ApiResponses({
@@ -46,6 +48,7 @@ public class SubscriptionController {
         return new ResponseEntity<>(this.service.retrievesSubscription(), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(path = "subscription/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Retrieve subscription by id", notes = "", response = SubscriptionRsDTO.class)
     @ApiResponses({

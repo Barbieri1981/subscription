@@ -17,4 +17,4 @@ docker ps -a
 docker container ls
 
 ##Swagger UI URL
-http://localhost:9090/swagger-ui.html
+http://localhost:9000/swagger-ui.html

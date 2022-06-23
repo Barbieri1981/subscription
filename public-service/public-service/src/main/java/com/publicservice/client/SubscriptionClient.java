@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-@FeignClient("subscription-service")
+@FeignClient(value = "subscription-service", name = "subscription-service", configuration = FeignClientInterceptor.class)
 public interface SubscriptionClient {
 
     @PostMapping(path = "subscription", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

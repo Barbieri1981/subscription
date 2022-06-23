@@ -20,8 +20,11 @@ Is an orchestrator that interacts with the Subscription service consuming the ex
 ##### Description
 Microservice with subscription business endpoint.    
 - Create subscription   
-- Retrieve Subscription by id   
-- Retrieves Subscriptions    
+- Retrieve Subscription by id (only user with ADMIN role can execute this endpoint)
+ ``@PreAuthorize(hasRole(ADMIN))``
+- Retrieves Subscriptions (only user with ADMIN role can execute this endpoint)   
+  ``@PreAuthorize(hasRole(ADMIN))``
+- Cancel Subscription by id 
 ##### Frameworks used
 - Spring Boot   
 - Spring Cloud
@@ -62,7 +65,6 @@ Security Server
 
 ### Resilient Subscription-Service using Resilience4j patterns
 
-- Circuit Breaker pattern for create subscription **"/subscription"** API inside **subscription-service** microservice   
 - Rate Limiter pattern for retrieving subscriptions **"/subscriptions"** API inside **subscription-service** microservice
 
 

@@ -34,7 +34,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     private final SubscriptionConverter subscriptionConverter;
     private final EmailService emailService;
 
-    @CircuitBreaker(name = "create-subscription-circuit-breaker", fallbackMethod = "createSubscriptionFallbackMethod")
+
     @Override
     public SubscriptionRsDTO createSubscription(final SubscriptionRqDTO request) {
         log.debug("Creating subscription: {}", request);
@@ -44,10 +44,6 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         return this.subscriptionConverter.convert(subscription);
     }
 
-    private SubscriptionRsDTO createSubscriptionFallbackMethod(final SubscriptionRqDTO request, Throwable e) {
-        log.debug("Create subscriptions fallback method {}", e.getMessage());
-        throw new CircuitBreakerException("Subscription Service is down", ErrorType.SUBSCRIPTION_IS_DOWN);
-    }
 
     private void validateData(final SubscriptionRqDTO request) {
         log.debug("Validating data {}", request);

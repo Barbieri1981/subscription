@@ -22,9 +22,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.stream.Collectors;
 
-import static com.sercuirtyserver.constants.Constants.HEADER_AUTHORIZACION_KEY;
-import static com.sercuirtyserver.constants.Constants.TOKEN_EXPIRATION_TIME;
-
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -55,9 +52,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 				.collect(Collectors.joining(","));
 		String token = Jwts.builder().setIssuedAt(new Date()).setIssuer(Constants.ISSUER_INFO)
 				.setSubject(((User)auth.getPrincipal()).getUsername()).claim(Constants.AUTHORITIES_KEY, authorities)
-				.setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))
+				.setExpiration(new Date(System.currentTimeMillis() + Constants.TOKEN_EXPIRATION_TIME))
 				.signWith(SignatureAlgorithm.HS512, Constants.SECRET_KEY).compact();
-		response.addHeader(HEADER_AUTHORIZACION_KEY, Constants.TOKEN_BEARER_PREFIX + " " + token);
+		response.addHeader(Constants.HEADER_AUTHORIZACION_KEY, Constants.TOKEN_BEARER_PREFIX + " " + token);
 		response.addHeader("Content-Type","application/json");
 		response.getWriter().write(mapper.writeValueAsString(AuthenticationResponseDTO.builder().accessToken(token).build()));
 		response.getWriter().flush();
