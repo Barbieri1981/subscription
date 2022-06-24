@@ -11,10 +11,10 @@ docker system prune
 docker system prune -a   
 docker volume prune     
 docker rm -v container_name   
-###verify clean environment
+### verify clean environment
 docker images -a   
 docker ps -a   
 docker container ls   
 
-##Eureka Server URL
+## Eureka Server URL
 http://localhost:8070   
