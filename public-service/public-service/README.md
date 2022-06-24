@@ -5,7 +5,7 @@ docker build -t public-service .
 docker images   
 docker run --name public-service -p 9000:9000 public-service:latest   
 
-##Docker commands
+## Docker commands
 ### clean
 docker system prune      
 docker system prune -a   
@@ -16,5 +16,5 @@ docker images -a
 docker ps -a   
 docker container ls   
 
-##Swagger UI URL
+## Swagger UI URL
 http://localhost:9000/swagger-ui.html
