@@ -12,9 +12,9 @@ docker system prune -a
 docker volume prune    
 docker rm -v container_name
 ### verify clean environment
-docker images -a
-docker ps -a
-docker container ls
+docker images -a   
+docker ps -a   
+docker container ls   
 
 ## Swagger UI URL  
 http://localhost:9090/swagger-ui.html
