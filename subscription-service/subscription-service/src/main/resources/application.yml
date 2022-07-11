@@ -5,10 +5,33 @@ mail-config:
 resilience4j:
   ratelimiter:
     configs:
-      defecto:
+      properties:
         timeoutDuration: 1s
-        limitRefreshPeriod: 5s
-        limitForPeriod: 100
+        limitRefreshPeriod: 50s
+        limitForPeriod: 3
     instances:
       retrieves-subscriptions-rate-limiter:
+        base-config: properties
+  bulkhead:
+    instances:
+      retrieve-subscription-bulkhead:
+        maxWaitDuration: 1ms
+        maxConcurrentCalls: 1
+  circuitBreaker:
+    configs:
+      defecto:
+        sliding-window-size: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 60s
+        permitted-number-of-calls-in-half-open-state: 5
+    instances:
+      send-email-circuit-breaker:
         base-config: defecto
+  retry:
+    instances:
+      send-email-retry:
+        maxRetryAttempts: 4
+        waitDuration: 10000
+      retries-sending-email:
+        maxRetryAttempts: 5
+        waitDuration: 10000

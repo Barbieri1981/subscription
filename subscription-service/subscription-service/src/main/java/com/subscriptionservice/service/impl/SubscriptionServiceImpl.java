@@ -6,14 +6,14 @@ import com.subscriptionservice.dto.SubscriptionRqDTO;
 import com.subscriptionservice.dto.SubscriptionRsDTO;
 import com.subscriptionservice.entity.Subscription;
 import com.subscriptionservice.enums.ErrorType;
-import com.subscriptionservice.exception.CircuitBreakerException;
 import com.subscriptionservice.exception.RegisteredSubscriptionException;
 import com.subscriptionservice.exception.SubscriptionNotFound;
 import com.subscriptionservice.repository.SubscriptionRepository;
 import com.subscriptionservice.service.EmailService;
 import com.subscriptionservice.service.SubscriptionService;
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -40,7 +40,8 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         log.debug("Creating subscription: {}", request);
         validateData(request);
         final Subscription subscription = this.repository.save(this.subscriptionRqConverter.convert(request));
-        this.emailService.sendEmail(request);
+        //this.emailService.sendEmail(request);
+        this.emailService.retriesSendingEmail(request);
         return this.subscriptionConverter.convert(subscription);
     }
 
@@ -60,8 +61,10 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         return this.repository.findAll().stream().map(subscriptionConverter::convert).collect(Collectors.toList());
     }
 
+    @Bulkhead(name = "retrieve-subscription-bulkhead", type = Bulkhead.Type.SEMAPHORE, fallbackMethod = "retrieveSubscriptionBulkhead")
     @Override
     public SubscriptionRsDTO retrieveSubscription(final long id) {
+        log.debug("Retrieving subscription by id {}", id);
         return this.subscriptionConverter.convert(findSubscriptionById(id));
     }
 
@@ -80,8 +83,13 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
     private List<SubscriptionRsDTO> retrievesSubscriptionFallbackMethod(Throwable e) {
-        log.debug("Retrieving subscriptions fallback method {}", e.getMessage());
+        log.error("Retrieving subscriptions fallback method {}", e.getMessage());
         return new ArrayList<>(Collections.singleton(SubscriptionRsDTO.builder().build()));
+    }
+
+    private SubscriptionRsDTO retrieveSubscriptionBulkhead(final long id, Throwable e) {
+        log.error("Retrieve subscription {}", e.getMessage());
+        return SubscriptionRsDTO.builder().build();
     }
 
 }

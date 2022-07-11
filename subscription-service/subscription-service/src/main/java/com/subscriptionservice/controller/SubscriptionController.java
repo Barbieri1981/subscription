@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.IntStream;
 
 @Api
 @Slf4j
@@ -58,6 +59,10 @@ public class SubscriptionController {
             @ApiResponse(code = 500, message = "Internal Server Error", response = ErrorDetailsDTO.class)
     })
     public ResponseEntity<SubscriptionRsDTO> retrievesSubscription(@PathVariable final long id) {
+        IntStream.rangeClosed(1, 20).parallel().forEach(t->{
+            this.service.retrieveSubscription(1);
+        }
+        );
         return new ResponseEntity<>(this.service.retrieveSubscription(id), HttpStatus.OK);
     }
 
