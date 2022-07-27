@@ -39,7 +39,7 @@ public class EmailController {
             @ApiResponse(code = 500, message = "Internal Server Error", response = ErrorDetailsDTO.class)
     })
     public ResponseEntity<Void> sendEmail(@RequestBody @Valid final EmailRqDTO request) throws TimeoutException {
-        sleep();
+        //sleep();
         this.service.sendEmail(request);
         return ResponseEntity.noContent().build();
     }

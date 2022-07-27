@@ -16,10 +16,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class EmailServiceImpl implements EmailService {
 
+    public static final String SEND_EMAIL_CIRCUIT_BREAKER = "send-email-circuit-breaker";
     private final EmailFactory emailFactory;
     private final EmailClient emailClient;
 
-    @CircuitBreaker(name = "send-email-circuit-breaker", fallbackMethod = "sendEmailCircuitBreaker")
+    @CircuitBreaker(name = SEND_EMAIL_CIRCUIT_BREAKER, fallbackMethod = "sendEmailCircuitBreaker")
     @Retry(name = "send-email-retry", fallbackMethod = "sendEmailRetry")
     @Override
     public void sendEmail(final SubscriptionRqDTO req) {
