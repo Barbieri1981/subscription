@@ -39,13 +39,13 @@ services:
       - eureka-server
     restart: on-failure
 
-  subscription-service:
-    build: ./subscription-service/subscription-service
-    container_name: subscription-service
+  security-service:
+    build: ./security-server/security-server
+    container_name: security-service
     environment:
       EUREKA_SERVER: http://eureka-server:8070/eureka
     ports:
-      - 8080:8080
+      - 9095:9095
     networks:
       - subscription-network
     links:
@@ -54,13 +54,13 @@ services:
       - eureka-server
     restart: on-failure
 
-  security-service:
-    build: ./security-server/security-server
-    container_name: security-service
+  subscription-service:
+    build: ./subscription-service/subscription-service
+    container_name: subscription-service
     environment:
       EUREKA_SERVER: http://eureka-server:8070/eureka
     ports:
-      - 9095:9095
+      - 8080:8080
     networks:
       - subscription-network
     links:
