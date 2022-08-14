@@ -59,6 +59,7 @@ public class SubscriptionController {
             @ApiResponse(code = 500, message = "Internal Server Error", response = ErrorDetailsDTO.class)
     })
     public ResponseEntity<SubscriptionRsDTO> retrievesSubscription(@PathVariable final long id) {
+        //parallel executions in orde to test the Bulkhead pattern
         IntStream.rangeClosed(1, 20).parallel().forEach(t->{
             this.service.retrieveSubscription(1);
         }

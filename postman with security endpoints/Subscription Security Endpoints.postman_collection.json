@@ -1,63 +1,100 @@
 {
-	"variables": [],
 	"info": {
+		"_postman_id": "5c8c18e3-08c7-40cf-afa9-99a291c7f636",
 		"name": "Subscription Security Endpoints",
-		"_postman_id": "c0a1ab48-2e50-dee4-dda7-9c8a99c7dee5",
-		"description": "",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18305332"
 	},
 	"item": [
 		{
 			"name": "public service",
-			"description": "",
 			"item": [
 				{
 					"name": "Public Retrieve subscription by id",
 					"request": {
-						"url": "http://localhost:9000/subscription/1",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer  eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NTYwMjcxNTgsImlzcyI6InN1YnNjcmlwdGlvbiIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX0FETUlOIiwiZXhwIjoxNjU2ODkxMTU4fQ.kJ2uMVhDuxTFQaQFtZa7YlSN7XnZjpo543_RD3qqx8hzIJL1HGLN5I4htWaayHLSF0aatVJs71a_7DZGSGwOPw",
-								"description": ""
+								"value": "Bearer  eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NjA0MzUzNzMsImlzcyI6InN1YnNjcmlwdGlvbiIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX0FETUlOIiwiZXhwIjoxNjYxMjk5MzczfQ.au-mD84_AwTt7fvLpwrsq1eqUdNqmaNdDPj89BWeWBMIwdxommYJE4__tv96Y3V5luj63Vz_gWGwjim8GMfwsw"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9000/subscription/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"subscription",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Public create subscription",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer  eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NjA0MjQzMDYsImlzcyI6InN1YnNjcmlwdGlvbiIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX0FETUlOIiwiZXhwIjoxNjYxMjg4MzA2fQ.l9UTchdCmTeZ0J9XMmwU2K3NSx7oLsLT7z-JFZEbcY7jXEAsOfT0FB6ta0iM9ReDZffmwbpDRhIJT6lrsVt3kg"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "{\n  \"email\": \"email2@gmail.com\",\n  \"birthDate\": \"2010-10-11\",\n  \"firstName\": \"string\",\n  \"gender\": \"string\",\n  \"consent\": true,\n  \"newsletterId\": 0\n}"
 						},
-						"description": ""
+						"url": {
+							"raw": "http://localhost:9000/subscription",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"subscription"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Public Retrieve subscriptions",
 					"request": {
-						"url": "http://localhost:9000/subscriptions",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer  eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NTYwMjcxNTgsImlzcyI6InN1YnNjcmlwdGlvbiIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX0FETUlOIiwiZXhwIjoxNjU2ODkxMTU4fQ.kJ2uMVhDuxTFQaQFtZa7YlSN7XnZjpo543_RD3qqx8hzIJL1HGLN5I4htWaayHLSF0aatVJs71a_7DZGSGwOPw",
-								"description": ""
+								"value": "Bearer  eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NjA0MjIxNzgsImlzcyI6InN1YnNjcmlwdGlvbiIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX0FETUlOIiwiZXhwIjoxNjYxMjg2MTc4fQ.ucfhOH7hhDi0z1SFQbKXR6c0GLyXdwj4TU8825b9-tT9-rbhnuDpLHHETExulb4yMd32eR0GFzDcj4fvQcQiGw"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "http://localhost:9000/subscriptions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"subscriptions"
+							]
+						}
 					},
 					"response": []
 				}
@@ -65,55 +102,61 @@
 		},
 		{
 			"name": "subscription service",
-			"description": "",
 			"item": [
 				{
 					"name": "Retrieve subscription by id",
 					"request": {
-						"url": "http://localhost:8080/subscription/1",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer  eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NTYwMjcxNTgsImlzcyI6InN1YnNjcmlwdGlvbiIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX0FETUlOIiwiZXhwIjoxNjU2ODkxMTU4fQ.kJ2uMVhDuxTFQaQFtZa7YlSN7XnZjpo543_RD3qqx8hzIJL1HGLN5I4htWaayHLSF0aatVJs71a_7DZGSGwOPw",
-								"description": ""
+								"value": "Bearer  eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NTYwMjcxNTgsImlzcyI6InN1YnNjcmlwdGlvbiIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX0FETUlOIiwiZXhwIjoxNjU2ODkxMTU4fQ.kJ2uMVhDuxTFQaQFtZa7YlSN7XnZjpo543_RD3qqx8hzIJL1HGLN5I4htWaayHLSF0aatVJs71a_7DZGSGwOPw"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "http://localhost:8080/subscription/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"subscription",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Retrieve subscriptions",
 					"request": {
-						"url": "http://localhost:8080/subscriptions",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer  eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NTYwMjcxNTgsImlzcyI6InN1YnNjcmlwdGlvbiIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX0FETUlOIiwiZXhwIjoxNjU2ODkxMTU4fQ.kJ2uMVhDuxTFQaQFtZa7YlSN7XnZjpo543_RD3qqx8hzIJL1HGLN5I4htWaayHLSF0aatVJs71a_7DZGSGwOPw",
-								"description": ""
+								"value": "Bearer  eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NTYwMjcxNTgsImlzcyI6InN1YnNjcmlwdGlvbiIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX0FETUlOIiwiZXhwIjoxNjU2ODkxMTU4fQ.kJ2uMVhDuxTFQaQFtZa7YlSN7XnZjpo543_RD3qqx8hzIJL1HGLN5I4htWaayHLSF0aatVJs71a_7DZGSGwOPw"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "http://localhost:8080/subscriptions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"subscriptions"
+							]
+						}
 					},
 					"response": []
 				}
@@ -122,14 +165,23 @@
 		{
 			"name": "Login",
 			"request": {
-				"url": "http://localhost:9095/login",
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n  \"password\": \"password\",\n  \"userName\": \"admin@gmail.com\"\n}"
 				},
-				"description": ""
+				"url": {
+					"raw": "http://localhost:9095/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9095",
+					"path": [
+						"login"
+					]
+				}
 			},
 			"response": []
 		}

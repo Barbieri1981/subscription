@@ -1,6 +1,5 @@
 package com.publicservice.service;
 
-
 import com.publicservice.dto.SubscriptionRqDTO;
 import com.publicservice.dto.SubscriptionRsDTO;
 

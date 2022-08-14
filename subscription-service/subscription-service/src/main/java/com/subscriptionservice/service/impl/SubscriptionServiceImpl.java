@@ -40,8 +40,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         log.debug("Creating subscription: {}", request);
         validateData(request);
         final Subscription subscription = this.repository.save(this.subscriptionRqConverter.convert(request));
-        //this.emailService.sendEmail(request);
-        this.emailService.retriesSendingEmail(request);
+        this.emailService.sendEmail(request);
         return this.subscriptionConverter.convert(subscription);
     }
 
@@ -62,6 +61,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
     @Bulkhead(name = "retrieve-subscription-bulkhead", type = Bulkhead.Type.SEMAPHORE, fallbackMethod = "retrieveSubscriptionBulkhead")
+    @Retry(name = "retries-subscriptions", fallbackMethod = "retrieveSubscriptionRetryPattern")
     @Override
     public SubscriptionRsDTO retrieveSubscription(final long id) {
         log.debug("Retrieving subscription by id {}", id);
@@ -87,8 +87,14 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         return new ArrayList<>(Collections.singleton(SubscriptionRsDTO.builder().build()));
     }
 
+
     private SubscriptionRsDTO retrieveSubscriptionBulkhead(final long id, Throwable e) {
         log.error("Retrieve subscription {}", e.getMessage());
+        return SubscriptionRsDTO.builder().build();
+    }
+
+    private SubscriptionRsDTO retrieveSubscriptionRetryPattern(final long id, Throwable e) {
+        log.error("Retrieve subscription after retrying {}", e.getMessage());
         return SubscriptionRsDTO.builder().build();
     }
 
