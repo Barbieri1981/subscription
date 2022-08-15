@@ -15,8 +15,8 @@ resilience4j:
   bulkhead:
     instances:
       retrieve-subscription-bulkhead:
-        maxWaitDuration: 10ms
-        maxConcurrentCalls: 1
+        maxWaitDuration: 0
+        maxConcurrentCalls: 2
   circuitBreaker:
     configs:
       defecto:
@@ -29,6 +29,8 @@ resilience4j:
         base-config: defecto
   retry:
     instances:
-      retries-subscriptions:
-        maxRetryAttempts: 2
+      cancel-subscription:
+        maxRetryAttempts: 4
         waitDuration: 10000
+        retryExceptions:
+          - java.util.concurrent.TimeoutException

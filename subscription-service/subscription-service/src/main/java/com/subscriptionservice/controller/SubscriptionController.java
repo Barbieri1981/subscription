@@ -5,6 +5,7 @@ import com.subscriptionservice.dto.SubscriptionRsDTO;
 import com.subscriptionservice.exception.dto.ErrorDetailsDTO;
 import com.subscriptionservice.service.SubscriptionService;
 import io.swagger.annotations.*;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.IntStream;
 
 @Api
@@ -59,15 +61,14 @@ public class SubscriptionController {
             @ApiResponse(code = 500, message = "Internal Server Error", response = ErrorDetailsDTO.class)
     })
     public ResponseEntity<SubscriptionRsDTO> retrievesSubscription(@PathVariable final long id) {
-        //parallel executions in orde to test the Bulkhead pattern
-        IntStream.rangeClosed(1, 20).parallel().forEach(t->{
-            this.service.retrieveSubscription(1);
-        }
-        );
-        return new ResponseEntity<>(this.service.retrieveSubscription(id), HttpStatus.OK);
+        //parallel executions in order to test the Bulkhead pattern
+        AtomicReference<SubscriptionRsDTO> result = new AtomicReference<>();
+        IntStream.rangeClosed(1, 3).parallel().forEach(t-> result.set(this.service.retrieveSubscription(id)));
+        return new ResponseEntity<>(result.get(), HttpStatus.OK);
     }
 
-    @PostMapping(path = "subscription/{id}/cancel")
+    @SneakyThrows
+    @PutMapping(path = "subscription/{id}/cancel")
     @ApiOperation(value = "Cancel subscription")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Cancel Subscription"),

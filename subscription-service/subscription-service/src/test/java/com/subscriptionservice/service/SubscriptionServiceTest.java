@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeoutException;
 
 import static org.junit.Assert.*;
 
@@ -108,7 +109,7 @@ public class SubscriptionServiceTest {
     }
 
     @Test
-    public void whenRetrieveSubscriptionByIdIsExecutedThenVerifyData() {
+    public void whenRetrieveSubscriptionByIdIsExecutedThenVerifyData()  {
         //given
         final Subscription subscription = createSubscription();
         SubscriptionRsDTO subscriptionResponse = createSubscriptionResponse();

@@ -58,7 +58,7 @@ public class PublicServiceController {
         return new ResponseEntity<>(this.service.retrieveSubscription(id), HttpStatus.OK);
     }
 
-    @PostMapping(path = "subscription/{id}/cancel")
+    @PutMapping(path = "subscription/{id}/cancel")
     @ApiOperation(value = "Cancel subscription")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Cancel Subscription"),

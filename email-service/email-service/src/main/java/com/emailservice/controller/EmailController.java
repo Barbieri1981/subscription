@@ -16,17 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.Random;
-import java.util.concurrent.TimeoutException;
 
 @Api
 @Slf4j
 @RestController
 public class EmailController {
-
-    private static final int INT = 1;
-    private static final int BOUND = INT;
-    public static final int MILLIS = 5000;
 
     @Autowired
     private EmailService service;
@@ -38,25 +32,9 @@ public class EmailController {
             @ApiResponse(code = 400, message = "Bad Request", response = ErrorDetailsDTO.class),
             @ApiResponse(code = 500, message = "Internal Server Error", response = ErrorDetailsDTO.class)
     })
-    public ResponseEntity<Void> sendEmail(@RequestBody @Valid final EmailRqDTO request) throws TimeoutException {
-        //sleep();
+    public ResponseEntity<Void> sendEmail(@RequestBody @Valid final EmailRqDTO request) {
         this.service.sendEmail(request);
         return ResponseEntity.noContent().build();
-    }
-
-    private void randomSleep() throws TimeoutException {
-        if (new Random().nextInt(BOUND)== INT) {
-            sleep();
-        }
-    }
-
-    private void sleep() throws TimeoutException {
-        try {
-            Thread.sleep(MILLIS);
-            throw new TimeoutException();
-        } catch (InterruptedException e) {
-            log.error(e.getMessage());
-        }
     }
 
 }

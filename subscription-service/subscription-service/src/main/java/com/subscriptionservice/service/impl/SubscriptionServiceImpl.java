@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -61,21 +62,25 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
     @Bulkhead(name = "retrieve-subscription-bulkhead", type = Bulkhead.Type.SEMAPHORE, fallbackMethod = "retrieveSubscriptionBulkhead")
-    @Retry(name = "retries-subscriptions", fallbackMethod = "retrieveSubscriptionRetryPattern")
     @Override
     public SubscriptionRsDTO retrieveSubscription(final long id) {
         log.debug("Retrieving subscription by id {}", id);
-        return this.subscriptionConverter.convert(findSubscriptionById(id));
+         return this.subscriptionConverter.convert(findSubscriptionById(id));
     }
 
+
+    @Retry(name = "cancel-subscription", fallbackMethod = "cancelSubscriptionFallbackMethod")
     @Override
-    public void cancelSubscription(final long id) {
+    public void cancelSubscription(final long id) throws TimeoutException {
+        if (id == 1) {
+            throw new TimeoutException();
+        }
         final Subscription subscription = findSubscriptionById(id);
         log.debug("Canceling subscription {}", subscription);
         subscription.setConsent(false);
         this.repository.save(subscription);
     }
-
+    
     private Subscription findSubscriptionById(final long id) {
         log.debug("Retrieving subscription by id {}", id);
         return this.repository.findById(id)
@@ -84,18 +89,16 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     private List<SubscriptionRsDTO> retrievesSubscriptionFallbackMethod(Throwable e) {
         log.error("Retrieving subscriptions fallback method {}", e.getMessage());
-        return new ArrayList<>(Collections.singleton(SubscriptionRsDTO.builder().build()));
+        return new ArrayList<>(Collections.singleton(SubscriptionRsDTO.builder().id(1l).build()));
     }
-
 
     private SubscriptionRsDTO retrieveSubscriptionBulkhead(final long id, Throwable e) {
         log.error("Retrieve subscription {}", e.getMessage());
-        return SubscriptionRsDTO.builder().build();
+        return SubscriptionRsDTO.builder().id(1l).build();
     }
 
-    private SubscriptionRsDTO retrieveSubscriptionRetryPattern(final long id, Throwable e) {
-        log.error("Retrieve subscription after retrying {}", e.getMessage());
-        return SubscriptionRsDTO.builder().build();
+    private void cancelSubscriptionFallbackMethod(final long id, Throwable e)  {
+        log.error("Cancel subscription by calling another microservice {}", e.getMessage());
     }
 
 }

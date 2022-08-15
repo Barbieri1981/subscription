@@ -5,10 +5,7 @@ import com.publicservice.sto.SubscriptionRsSTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,6 +21,6 @@ public interface SubscriptionClient {
     @GetMapping(path = "subscription/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SubscriptionRsSTO> retrievesSubscription(@PathVariable final long id);
 
-    @PostMapping(path = "subscription/{id}/cancel")
+    @PutMapping(path = "subscription/{id}/cancel")
     public ResponseEntity<Void> cancelSubscription(@PathVariable final long id);
 }
